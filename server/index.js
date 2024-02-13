@@ -1,17 +1,32 @@
-import express from 'express'
-import cors from 'cors'
+import express from 'express';
+import http from 'http';
+import generateRoomId from './utils/generateRoomId.js'
+import { Server } from 'socket.io';
 
+const app = express();
+const httpServer = http.createServer(app);
+const io = new Server(httpServer);
 
-const app = express()
+const rooms = new Set();
 
-const port = process.env.PORT || 5000
+io.on('connection', (socket) => {
+    console.log("-----------USER CONNECTED----------", socket.id);
 
-app.use(cors())
+    socket.on('host_room', () => {
+        const roomId = generateRoomId();
+        socket.join(roomId);
+        rooms.add(roomId);
+        socket.emit('room_hosted', roomId);
+        console.log(`Room hosted: ${roomId}`);
+    });
 
-app.use((err, req, res) => {
-    res.send({ message: err.message })
-})
+    socket.on('disconnect', () => {
+        console.log("-----------USER DISCONNECTED----------");
+    });
+});
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`)
-})
+const PORT = process.env.PORT || 5000;
+
+httpServer.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
