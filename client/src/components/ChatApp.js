@@ -62,13 +62,12 @@ function ChatApp() {
 
     socket.on("room_not_found", (errorMessage) => setValues(errorMessage, false));
 
-
     return (
         <div className="max-w-xl mx-auto mt-8 p-4 bg-gray-100 rounded-lg border-2">
             {insideRoom && (
                 <>
                     <div className="flex justify-between items-center mb-4">
-                        <div className="bg-gray-950 text-white p-2 rounded-lg focus:outline-none w-32 h-12 m-2 flex justify-center items-center border-red-600">
+                        <div className="bg-gray-950 text-white p-2 rounded-lg focus:outline-none w-32 h-12 m-2 flex justify-center items-center">
                             <span className="text-xl">Room:</span>
                             <span className="ml-2 mt-1 text-lg font-bold">{roomId}</span>
                         </div>
@@ -82,8 +81,14 @@ function ChatApp() {
                     <div className="mt-4">
                         <div className="overflow-y-auto max-h-64">
                             {messages.map((msg, index) => (
-                                <div key={index} className={`p-2 my-1 rounded ${msg.name === username ? 'text-right bg-green-500' : 'text-left bg-gray-200'}`}>{username == msg.name ? "" : msg.name + ":"} {msg.message}</div>
+                                <div key={index} className={`flex ${msg.name === username ? "justify-end" : "justify-start"}`}>
+                                    <div className={`p-2 m-2 rounded ${msg.name === username ? "text-right bg-green-500" : "text-left bg-gray-200"}`}>
+                                        {username !== msg.name && <span className="font-bold">{msg.name}: </span>}
+                                        <span>{msg.message}</span>
+                                    </div>
+                                </div>
                             ))}
+
                         </div>
                         <TextInput
                             value={inputMessage}
