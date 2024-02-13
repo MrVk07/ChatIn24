@@ -56,8 +56,8 @@ function ChatApp() {
     };
 
     socket.on("receive_message", (data) => {
-        const { message, username } = data;
-        setMessages([...messages, `${username}: ${message}`]);
+        const { message, name } = data;
+        setMessages([...messages, { name, message }]);
     });
 
     socket.on("room_not_found", (errorMessage) => setValues(errorMessage, false));
@@ -82,7 +82,7 @@ function ChatApp() {
                     <div className="mt-4">
                         <div className="overflow-y-auto max-h-64">
                             {messages.map((msg, index) => (
-                                <div key={index} className="p-2 bg-gray-200 my-1 rounded">{msg}</div>
+                                <div key={index} className={`p-2 my-1 rounded ${msg.name === username ? 'text-right bg-green-500' : 'text-left bg-gray-200'}`}>{username == msg.name ? "" : msg.name + ":"} {msg.message}</div>
                             ))}
                         </div>
                         <TextInput

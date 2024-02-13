@@ -44,8 +44,7 @@ io.on('connection', (socket) => {
     socket.on('send_message', (data) => {
         const { message, roomId, username } = data;
         console.log('Message:', message);
-        const sender = rooms.get(roomId).users.get(socket.id);
-        io.to(roomId).emit('receive_message', { message, username, sender });
+        io.to(roomId).emit('receive_message', { message, name: username });
     });
 
     socket.on('disconnect', () => {
