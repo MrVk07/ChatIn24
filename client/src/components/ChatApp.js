@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import Button from "./Button";
 import TextInput from "./TextInput";
 
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://chatin24.onrender.com");
 
 function ChatApp() {
     const [roomId, setRoomId] = useState("");
