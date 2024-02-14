@@ -6,6 +6,12 @@ A fast, real-time chat app powered by Node.js, Express, and React. Connect insta
 [![Demo](https://img.shields.io/badge/Demo-Visit%20Now-brightgreen)](https://chatin24.vercel.app)
 
 
+A user-friendly chat application with features similar of WhatsApp.<div>
+    <img src="./client/public/chatbox_home_page.png" alt="ChatIn24" width="400" height="400">
+    <img src="./client/public/chatbox_chat.png" alt="ChatIn24" width="400" height="400">
+</div>
+
+
 ### Description
 
 This application allows users to create chat rooms, join existing rooms, and communicate with others in real-time.
