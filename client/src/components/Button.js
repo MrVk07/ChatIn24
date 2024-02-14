@@ -1,9 +1,6 @@
-const Button = ({ onClick, disabled, text, className }) => (
-    <button
-        className={`py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer ${className}`}
-        onClick={onClick}
-        disabled={disabled}
-    >
+const Button = ({ onClick, text, className }) => (
+    <button className={`py-2 px-4 rounded cursor-pointer text-white font-bold  focus:shadow-outline ${className}`}
+        onClick={onClick}>
         {text}
     </button>
 );

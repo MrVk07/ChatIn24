@@ -1,12 +1,12 @@
 import './App.css';
 import ChatApp from './components/ChatApp';
+import Heading from './components/Heading';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <ChatApp />
-      </header>
+      <Heading />
+      <ChatApp />
     </div>
   );
 }
