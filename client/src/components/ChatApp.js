@@ -100,6 +100,7 @@ function ChatApp() {
                             value={inputMessage}
                             onChange={(e) => setInputMessage(e.target.value)}
                             placeholder="Enter your message..."
+                            onKeyPress={(e) => { if (e.key === 'Enter') sendMessage(); }}
                         />
                         <Button
                             onClick={sendMessage}
@@ -115,7 +116,6 @@ function ChatApp() {
                         <div className="mx-2">
                             <Button
                                 onClick={hostRoom}
-
                                 text="Host a Room"
                                 className={`bg-blue-500 hover:bg-blue-700}`}
                             />
@@ -145,6 +145,9 @@ function ChatApp() {
                                 value={roomId}
                                 onChange={(e) => setRoomId(e.target.value)}
                                 placeholder="Enter 6-digit Room ID"
+                                onKeyPress={(e) => {
+                                    if (e.key === 'Enter') joinRoom();
+                                }}
                             />
                         </div>
                     </div>
