@@ -9,32 +9,26 @@ const httpServer = http.createServer(app);
 
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"]
+        origin: "*",
     }
 });
 
 app.use(cors());
 
-const rooms = new Map();
+const rooms = new Set();
 
 io.on('connection', (socket) => {
-    console.log("-----------USER CONNECTED----------", socket.id);
-
     socket.on('host_room', () => {
         const roomId = generateRoomId();
         socket.join(roomId);
-        rooms.set(roomId, { users: new Map() });
+        rooms.add(roomId);
         socket.emit('room_hosted', roomId);
-        console.log(`Room hosted: ${roomId}`);
     });
 
     socket.on('join_room', (data) => {
         const { roomId, username } = data;
         if (rooms.has(roomId)) {
             socket.join(roomId);
-            rooms.get(roomId).users.set(socket.id, username);
-            console.log(`User ${username} joined room: ${roomId}`);
             socket.emit('room_joined', roomId);
         } else {
             socket.emit('room_not_found', 'Room not found');
@@ -43,16 +37,13 @@ io.on('connection', (socket) => {
 
     socket.on('send_message', (data) => {
         const { message, roomId, username } = data;
-        console.log('Message:', message);
         io.to(roomId).emit('receive_message', { message, name: username });
     });
 
     socket.on('disconnect', () => {
-        console.log("-----------USER DISCONNECTED----------");
-        rooms.forEach((room, roomId) => {
-            if (room.users.has(socket.id)) {
-                room.users.delete(socket.id);
-                console.log(`User disconnected from room: ${roomId}`);
+        rooms.forEach((roomId) => {
+            if (socket.rooms.has(roomId)) {
+                rooms.delete(roomId);
             }
         });
     });
