@@ -2,7 +2,8 @@
 
 A fast, real-time chat app powered by Node.js, Express, and React. Connect instantly with friends or colleagues in simple chats.
 
-[(https://img.shields.io/badge/Demo-Visit%20Now-brightgreen)](https://chatin24.vercel.app)
+
+[![Demo](https://img.shields.io/badge/Demo-Visit%20Now-brightgreen)](https://chatin24.vercel.app)
 
 
 ### Description
